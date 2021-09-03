@@ -1,0 +1,51 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Scenes/Snaketail.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Scenes/Snakehead.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scripts/SnakeController.gd" type="Script" id=3]
+[ext_resource path="res://Scenes/SnakeBodySegment.tscn" type="PackedScene" id=4]
+
+[node name="snake" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="head" parent="." instance=ExtResource( 2 )]
+
+[node name="headBodyPinJoint" type="GrooveJoint2D" parent="head"]
+position = Vector2( -8, 0 )
+rotation = 1.5708
+node_a = NodePath("..")
+node_b = NodePath("../../body/firstSegment")
+disable_collision = false
+length = 1.0
+initial_offset = 1.0
+
+[node name="body" type="Node2D" parent="."]
+
+[node name="firstSegment" parent="body" instance=ExtResource( 4 )]
+position = Vector2( -16, 0 )
+
+[node name="PinJoint2D" type="GrooveJoint2D" parent="body/firstSegment"]
+position = Vector2( -8, 0 )
+rotation = 1.5708
+node_a = NodePath("..")
+node_b = NodePath("../../lastSegment")
+disable_collision = false
+length = 1.0
+initial_offset = 1.0
+
+[node name="lastSegment" parent="body" instance=ExtResource( 4 )]
+position = Vector2( -32, 0 )
+
+[node name="bodyTailPinJoint" type="GrooveJoint2D" parent="body/lastSegment"]
+position = Vector2( -8, 0 )
+rotation = 1.5708
+node_a = NodePath("..")
+node_b = NodePath("../../../tail")
+disable_collision = false
+length = 1.0
+initial_offset = 1.0
+
+[node name="tail" parent="." instance=ExtResource( 1 )]
+position = Vector2( -48, 0 )
+
+[node name="Tween" type="Tween" parent="."]
