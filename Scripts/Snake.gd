@@ -6,9 +6,7 @@ onready var tail: RigidBody2D = $tail
 export var snakeSpeed: int = 100
 var velocity: Vector2 = Vector2(snakeSpeed,0)
 const ROTATION_STEP: int = 90
-onready var targetRotation: float = head.rotation_degrees
 var rotating: bool = false
-export var speedOfRotation: float = 4
 
 func _physics_process(delta):
 
@@ -31,17 +29,12 @@ func _physics_process(delta):
 	velocity = Vector2(x_direction * snakeSpeed, y_direction * snakeSpeed)
 	
 	if !rotating and rotationMultiplier != 0 :
-		targetRotation = head.rotation_degrees + (rotationMultiplier * ROTATION_STEP)
+		var targetRotation = head.rotation_degrees + (rotationMultiplier * ROTATION_STEP)
+		head.rotateHeadTo(targetRotation)
 		rotating = true
-		#print("Target rotation set to : ", targetRotation)
 
-	if rotating and head.rotation_degrees != targetRotation:
-		var rotateBy = lerp(head.rotation_degrees, targetRotation, delta*speedOfRotation)
-		head.rotate(deg2rad(rotateBy-head.rotation_degrees))
-		#print("diffence remaining : ",head.rotation_degrees, " ", targetRotation, " ", abs(abs(head.rotation_degrees) - abs(targetRotation)) )
-	if rotating and abs(abs(head.rotation_degrees) - abs(targetRotation)) < 5 :
-		head.rotate(deg2rad(targetRotation-head.rotation_degrees))
-		targetRotation = head.rotation_degrees
-		rotating = false
-		#print("head stabalized", head.rotation_degrees,",", targetRotation)
 	velocity = head.move_and_slide(velocity)
+
+
+func _onHeadMovementCompleted():
+	rotating = false
