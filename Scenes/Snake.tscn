@@ -25,7 +25,7 @@ initial_offset = 1.0
 [node name="firstSegment" parent="body" instance=ExtResource( 4 )]
 position = Vector2( -16, 0 )
 
-[node name="PinJoint2D" type="GrooveJoint2D" parent="body/firstSegment"]
+[node name="GroveJoint2D" type="GrooveJoint2D" parent="body/firstSegment"]
 position = Vector2( -8, 0 )
 rotation = 1.5708
 node_a = NodePath("..")
