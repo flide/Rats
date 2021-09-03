@@ -20,8 +20,6 @@ disable_collision = false
 length = 1.0
 initial_offset = 1.0
 
-[node name="Tween" type="Tween" parent="head"]
-
 [node name="body" type="Node2D" parent="."]
 
 [node name="firstSegment" parent="body" instance=ExtResource( 4 )]
@@ -52,4 +50,3 @@ initial_offset = 1.0
 position = Vector2( -48, 0 )
 
 [connection signal="HeadRotationCompleted" from="head" to="." method="_onHeadMovementCompleted"]
-[connection signal="tween_all_completed" from="head/Tween" to="." method="_onHeadMovementCompleted"]
