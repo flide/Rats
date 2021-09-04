@@ -10,3 +10,4 @@ foodScene = ExtResource( 3 )
 
 [node name="snake" parent="." instance=ExtResource( 4 )]
 position = Vector2( 32, 24 )
+snakeSpeed = 100
