@@ -1,5 +1,6 @@
 extends Node2D
 
+onready var snake = $snake
 export var foodScene: PackedScene
 var food
 var randomNumberGenerator: RandomNumberGenerator = RandomNumberGenerator.new()
@@ -15,6 +16,7 @@ func _ready():
 
 func snake_found_egg(body):
 	food.queue_free()
+	snake.food_eaten()
 	setupEgg()
 
 func setupEgg():

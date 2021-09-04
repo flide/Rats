@@ -11,7 +11,7 @@ snakeSpeed = 300
 
 [node name="head" parent="." instance=ExtResource( 2 )]
 
-[node name="headBodyPinJoint" type="GrooveJoint2D" parent="head"]
+[node name="headBodyJoint" type="GrooveJoint2D" parent="head"]
 position = Vector2( -8, 0 )
 rotation = 1.5708
 node_a = NodePath("..")
@@ -37,7 +37,7 @@ initial_offset = 1.0
 [node name="lastSegment" parent="body" instance=ExtResource( 4 )]
 position = Vector2( -32, 0 )
 
-[node name="bodyTailPinJoint" type="GrooveJoint2D" parent="body/lastSegment"]
+[node name="bodyTailJoint" type="GrooveJoint2D" parent="body/lastSegment"]
 position = Vector2( -8, 0 )
 rotation = 1.5708
 node_a = NodePath("..")

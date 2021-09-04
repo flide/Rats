@@ -3,10 +3,14 @@ extends Node2D
 onready var head: KinematicBody2D = $head
 onready var tail: RigidBody2D = $tail
 
+export var bodySegment: PackedScene
 export var snakeSpeed: int = 100
 var velocity: Vector2 = Vector2(snakeSpeed,0)
 const ROTATION_STEP: int = 90
 var rotating: bool = false
+
+onready var secondLastSegment = $body/firstSegment
+onready var lastSegment = $body/lastSegment
 
 func _physics_process(delta):
 
@@ -38,3 +42,21 @@ func _physics_process(delta):
 
 func _onHeadMovementCompleted():
 	rotating = false
+	
+
+func food_eaten():
+	var new_segment = bodySegment.instance()
+	var new_groove_joint = GrooveJoint2D.new()
+	
+	$body.add_child(new_segment)
+	new_segment.add_child(new_groove_joint)
+	
+	new_groove_joint.set_node_a(new_segment.get_path())
+	new_groove_joint.set_node_b(lastSegment.get_path())
+	print(secondLastSegment.get_path().get_name(5), '..')
+	var groove_joint = get_node(secondLastSegment.get_path().get_name()+'/GrooveJoint2D')
+	secondLastSegment.get_path()
+	groove_joint.set_node_a(new_segment.get_path())
+	
+	
+	
