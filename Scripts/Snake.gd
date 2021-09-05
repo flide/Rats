@@ -12,6 +12,10 @@ var rotating: bool = false
 onready var secondLastSegment = $body/firstSegment
 onready var lastSegment = $body/lastSegment
 
+func _ready():
+	secondLastSegment.snake_init_groove_joint_setup();
+	lastSegment.snake_init_groove_joint_setup();
+
 func _physics_process(delta):
 
 	var x_direction = sign(velocity.x)
@@ -45,18 +49,19 @@ func _onHeadMovementCompleted():
 	
 
 func food_eaten():
-	var new_segment = bodySegment.instance()
-	var new_groove_joint = GrooveJoint2D.new()
+	pass
+	# var new_segment = bodySegment.instance()
+	# var new_groove_joint = GrooveJoint2D.new()
 	
-	$body.add_child(new_segment)
-	new_segment.add_child(new_groove_joint)
+	# $body.add_child(new_segment)
+	# new_segment.add_child(new_groove_joint)
 	
-	new_groove_joint.set_node_a(new_segment.get_path())
-	new_groove_joint.set_node_b(lastSegment.get_path())
-	print(secondLastSegment.get_path().get_name(5), '..')
-	var groove_joint = get_node(secondLastSegment.get_path().get_name()+'/GrooveJoint2D')
-	secondLastSegment.get_path()
-	groove_joint.set_node_a(new_segment.get_path())
+	# new_groove_joint.set_node_a(new_segment.get_path())
+	# new_groove_joint.set_node_b(lastSegment.get_path())
+	# print(secondLastSegment.get_path().get_name(5), '..')
+	# var groove_joint = get_node(secondLastSegment.get_path().get_name()+'/GrooveJoint2D')
+	# secondLastSegment.get_path()
+	# groove_joint.set_node_a(new_segment.get_path())
 	
 	
 	

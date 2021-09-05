@@ -24,27 +24,11 @@ initial_offset = 1.0
 
 [node name="firstSegment" parent="body" instance=ExtResource( 4 )]
 position = Vector2( -16, 0 )
-
-[node name="GroveJoint2D" type="GrooveJoint2D" parent="body/firstSegment"]
-position = Vector2( -8, 0 )
-rotation = 1.5708
-node_a = NodePath("..")
-node_b = NodePath("../../lastSegment")
-disable_collision = false
-length = 1.0
-initial_offset = 1.0
+connected_to = NodePath("../lastSegment")
 
 [node name="lastSegment" parent="body" instance=ExtResource( 4 )]
 position = Vector2( -32, 0 )
-
-[node name="bodyTailJoint" type="GrooveJoint2D" parent="body/lastSegment"]
-position = Vector2( -8, 0 )
-rotation = 1.5708
-node_a = NodePath("..")
-node_b = NodePath("../../../tail")
-disable_collision = false
-length = 1.0
-initial_offset = 1.0
+connected_to = NodePath("../../tail")
 
 [node name="tail" parent="." instance=ExtResource( 1 )]
 position = Vector2( -48, 0 )
