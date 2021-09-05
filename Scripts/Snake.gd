@@ -1,6 +1,8 @@
 extends Node2D
 
 onready var head: KinematicBody2D = $head
+onready var second_last_segment = $body/firstSegment
+onready var last_segment = $body/lastSegment
 onready var tail: RigidBody2D = $tail
 
 export var bodySegment: PackedScene
@@ -9,17 +11,19 @@ var velocity: Vector2 = Vector2(snakeSpeed,0)
 const ROTATION_STEP: int = 90
 var rotating: bool = false
 
-onready var secondLastSegment = $body/firstSegment
-onready var lastSegment = $body/lastSegment
+onready var in_between_segments = Array()
+
+var x_direction = 1
+var y_direction = 0
 
 func _ready():
-	secondLastSegment.snake_init_groove_joint_setup();
-	lastSegment.snake_init_groove_joint_setup();
+	second_last_segment.snake_init_groove_joint_setup();
+	last_segment.snake_init_groove_joint_setup();
 
 func _physics_process(delta):
 
-	var x_direction = sign(velocity.x)
-	var y_direction = sign(velocity.y)
+	x_direction = sign(velocity.x)
+	y_direction = sign(velocity.y)
 	var rotationMultiplier = 0
 
 	if x_direction !=0 and !rotating:
@@ -49,19 +53,29 @@ func _onHeadMovementCompleted():
 	
 
 func food_eaten():
-	pass
-	# var new_segment = bodySegment.instance()
-	# var new_groove_joint = GrooveJoint2D.new()
-	
-	# $body.add_child(new_segment)
-	# new_segment.add_child(new_groove_joint)
-	
-	# new_groove_joint.set_node_a(new_segment.get_path())
-	# new_groove_joint.set_node_b(lastSegment.get_path())
-	# print(secondLastSegment.get_path().get_name(5), '..')
-	# var groove_joint = get_node(secondLastSegment.get_path().get_name()+'/GrooveJoint2D')
-	# secondLastSegment.get_path()
-	# groove_joint.set_node_a(new_segment.get_path())
+	in_between_segments.append(bodySegment.instance())
+	var new_segment = in_between_segments[in_between_segments.size()-1]
+	#second_last_segment.find_node("GrooveJoint2D", true, false).length = 18
+	print("tail current position : ", tail.position)
+	last_segment.find_node("GrooveJoint2D", true, false).length = 18
+	tail.position = Vector2(tail.position.x - (16 * x_direction), tail.position.y - (16 * y_direction))
+	print("tail offset position : ", tail.position)
+	print("last_segment current position : ", last_segment.position)
+	second_last_segment.find_node("GrooveJoint2D", true, false).length = 18
+	last_segment.position = Vector2(last_segment.position.x - (16 * x_direction), last_segment.position.y - (16 * y_direction))
+	last_segment.find_node("GrooveJoint2D", true, false).length = 1
+	print("last_segment offset position : ", last_segment.position)
+	print("new_segment current position : ", new_segment.position)
+	new_segment.position = Vector2(second_last_segment.position.x - (16 * x_direction), second_last_segment.position.y - (16 * y_direction))
+	$body.add_child_below_node(second_last_segment, new_segment)
+	second_last_segment.find_node("GrooveJoint2D", true, false).length = 1
+	print("new_segment offset position : ", new_segment.position)
+	second_last_segment.set_groove_joint_for_body_segment(new_segment.get_path())
+	new_segment.set_groove_joint_for_body_segment(last_segment.get_path())
+	#second_last_segment.find_node("GrooveJoint2D", true, false).length = 1
+	print("second_last_segment : ", second_last_segment.find_node("GrooveJoint2D", true, false).rotation_degrees, second_last_segment.position)
+	print("new_segment : ", new_segment.find_node("GrooveJoint2D", true, false).rotation_degrees, new_segment.position)
+	second_last_segment = new_segment
 	
 	
 	
