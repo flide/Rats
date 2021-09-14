@@ -1,5 +1,6 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
+[ext_resource path="res://Scenes/SnakeBodySegment.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Scripts/playground.gd" type="Script" id=2]
 [ext_resource path="res://Scenes/eggs.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Scenes/Snake.tscn" type="PackedScene" id=4]
@@ -9,5 +10,6 @@ script = ExtResource( 2 )
 foodScene = ExtResource( 3 )
 
 [node name="snake" parent="." instance=ExtResource( 4 )]
-position = Vector2( 32, 24 )
+position = Vector2( 72, 24 )
+bodySegment = ExtResource( 1 )
 snakeSpeed = 100

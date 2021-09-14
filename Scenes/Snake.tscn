@@ -7,11 +7,12 @@
 
 [node name="snake" type="Node2D"]
 script = ExtResource( 3 )
+bodySegment = ExtResource( 4 )
 snakeSpeed = 300
 
 [node name="head" parent="." instance=ExtResource( 2 )]
 
-[node name="headBodyPinJoint" type="GrooveJoint2D" parent="head"]
+[node name="headBodyJoint" type="GrooveJoint2D" parent="head"]
 position = Vector2( -8, 0 )
 rotation = 1.5708
 node_a = NodePath("..")
@@ -24,27 +25,11 @@ initial_offset = 1.0
 
 [node name="firstSegment" parent="body" instance=ExtResource( 4 )]
 position = Vector2( -16, 0 )
-
-[node name="GroveJoint2D" type="GrooveJoint2D" parent="body/firstSegment"]
-position = Vector2( -8, 0 )
-rotation = 1.5708
-node_a = NodePath("..")
-node_b = NodePath("../../lastSegment")
-disable_collision = false
-length = 1.0
-initial_offset = 1.0
+connected_to = NodePath("../lastSegment")
 
 [node name="lastSegment" parent="body" instance=ExtResource( 4 )]
 position = Vector2( -32, 0 )
-
-[node name="bodyTailPinJoint" type="GrooveJoint2D" parent="body/lastSegment"]
-position = Vector2( -8, 0 )
-rotation = 1.5708
-node_a = NodePath("..")
-node_b = NodePath("../../../tail")
-disable_collision = false
-length = 1.0
-initial_offset = 1.0
+connected_to = NodePath("../../tail")
 
 [node name="tail" parent="." instance=ExtResource( 1 )]
 position = Vector2( -48, 0 )
